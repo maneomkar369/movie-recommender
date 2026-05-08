@@ -24,9 +24,9 @@ def train():
     movies = movies.merge(movie_popularity, on='movieId', how='left')
     movies['rating_count'] = movies['rating_count'].fillna(0)
 
-    # Filter top 10,000 movies to avoid OOM issues and keep recommendations relevant
-    print("Filtering top 10,000 movies...")
-    movies = movies.sort_values(by='rating_count', ascending=False).head(10000).reset_index(drop=True)
+    # Filter top 5,000 movies to avoid OOM issues on Render Free Tier (512MB RAM)
+    print("Filtering top 5,000 movies...")
+    movies = movies.sort_values(by='rating_count', ascending=False).head(5000).reset_index(drop=True)
 
     # Preprocess genres
     print("Preprocessing genres...")
